@@ -6,8 +6,7 @@ Create an app that does the following:
 - Some basic styling with a framework or from scratch
 - If you have time, deleting individual tree items or branches
 
-Data URL: https://github.com/mandanemedia/ListsOfCounties/blob/master/src/countries%2Bstates%2Bcities.json
-
+Data URL: https://raw.githubusercontent.com/mandanemedia/ListsOfCounties/master/src/countries%2Bstates%2Bcities.json
 e.g.:
 
 - [x] Canada

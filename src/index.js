@@ -12,13 +12,13 @@ const App = ({items=[]}) => {
 
   const [data, setData] = useState(items);
   
-  // useEffect(() => {
-  //   fetch(DataURL)
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       setData(data);
-  //     });
-  // }); 
+  useEffect(() => {
+    fetch(DataURL)
+      .then(res => res.json())
+      .then(data => {
+        setData(data);
+      });
+  }); 
   
   return (<>
     { (data.length > 0) ? <Sidebar items={data} /> : <span>Loading</span>}
