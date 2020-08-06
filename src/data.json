@@ -1,0 +1,132 @@
+[
+  {
+    "id": 1,
+    "name": "Test",
+    "states": [
+      {
+        "id": 3901,
+        "name": "Badakhshan",
+        "cities": [
+          {
+            "id": 52,
+            "name": "Ashkāsham"
+          },
+          {
+            "id": 68,
+            "name": "Fayzabad"
+          },
+          {
+            "id": 78,
+            "name": "Jurm"
+          },
+          {
+            "id": 84,
+            "name": "Khandūd"
+          },
+          {
+            "id": 115,
+            "name": "Rāghistān"
+          },
+          {
+            "id": 131,
+            "name": "Wākhān"
+          }
+        ]
+      },
+      {
+        "id": 3871,
+        "name": "Badghis",
+        "cities": [
+          {
+            "id": 72,
+            "name": "Ghormach"
+          },
+          {
+            "id": 108,
+            "name": "Qala i Naw"
+          }
+        ]
+      },
+      {
+        "id": 3875,
+        "name": "Baghlan",
+        "cities": [
+          {
+            "id": 54,
+            "name": "Baghlān"
+          },
+          {
+            "id": 140,
+            "name": "Ḩukūmatī Dahanah-ye Ghōrī"
+          },
+          {
+            "id": 101,
+            "name": "Nahrīn"
+          },
+          {
+            "id": 105,
+            "name": "Pul-e Khumrī"
+          }
+        ]
+      },
+      {
+        "id": 3884,
+        "name": "Balkh",
+        "cities": [
+          {
+            "id": 55,
+            "name": "Balkh"
+          },
+          {
+            "id": 65,
+            "name": "Dowlatābād"
+          },
+          {
+            "id": 85,
+            "name": "Khulm"
+          },
+          {
+            "id": 91,
+            "name": "Lab-Sar"
+          },
+          {
+            "id": 97,
+            "name": "Mazār-e Sharīf"
+          },
+          {
+            "id": 112,
+            "name": "Qarchī Gak"
+          }
+        ]
+      },
+      {
+        "id": 3872,
+        "name": "Bamyan",
+        "cities": [
+          {
+            "id": 57,
+            "name": "Bāmyān"
+          },
+          {
+            "id": 104,
+            "name": "Panjāb"
+          }
+        ]
+      },
+      {
+        "id": 3892,
+        "name": "Daykundi",
+        "cities": [
+          {
+            "id": 102,
+            "name": "Nīlī"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 123123,
+    "name": "Test 2"
+  }
+]
