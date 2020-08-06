@@ -1,4 +1,12 @@
+// @flow
 import React, {useState} from 'react'
+
+type itemType = {
+    name: string,
+    id: number,
+    states? : Array<itemType>,
+    cities? : Array<itemType>
+}
 
 const Collapsible = ({id, name, depth, props}) => {
 
@@ -16,7 +24,7 @@ const Collapsible = ({id, name, depth, props}) => {
             </div>);
 }
 
-const SidebarItem = ({data, depth=0}) => 
+const SidebarItem = ({data, depth=0}:{data:Array<itemType>, depth:number}) => 
 {
     return (
         <div className="menuList">
@@ -29,7 +37,7 @@ const SidebarItem = ({data, depth=0}) =>
     )
 }
 
-const Sidebar = ({items}) => 
+const Sidebar = ({items}:{items:Array<itemType>}) => 
  {
   return (
     <div  className="sidebar">
