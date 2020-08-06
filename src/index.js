@@ -18,7 +18,7 @@ const App = ({items=[]}) => {
       .then(data => {
         setData(data);
       });
-  }); 
+  });
   
   return (<>
     { (data.length > 0) ? <Sidebar items={data} /> : <span>Loading</span>}

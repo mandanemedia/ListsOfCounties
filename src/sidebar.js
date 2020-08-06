@@ -1,5 +1,6 @@
 // @flow
 import React, {useState} from 'react'
+import {Collapse} from 'react-collapse';
 
 type itemType = {
     name: string,
@@ -17,10 +18,12 @@ const Collapsible = ({id, name, depth, props}) => {
                 <button key={id} onClick={toggle}  style={{ paddingLeft: depth }} className={ !isOpen ? "plus" : "minus"} >
                     {name}
                 </button>
-                <div className={ !isOpen ? "collapsed" : ""}>
+                {props.states || props.cities ?  
+                <Collapse isOpened={isOpen}>
                     {props.states ? <SidebarItem data={props.states} depth={depth+20} /> : null }
                     {props.cities ? <SidebarItem data={props.cities} depth={depth+20} /> : null }
-                </div>
+                </Collapse> 
+                :null}
             </div>);
 }
 
