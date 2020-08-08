@@ -1,13 +1,22 @@
 .sidebar {
-    max-width: 240px;
+    max-width: 300px;
     border: 1px solid rgba(128, 124, 124, 0.1);
   }
-.menuListItem button {
-  padding-left: 10px;
+.rowItem {
+  border: #EEE 1px solid;
+}
+.deleteRow {
+  padding-left: 2px;
+  padding-right: 2px;
+  cursor: pointer;
+}
+.treeButton {
   border: none;
   background-color:#fff;
 }
-
-.hasChild{
+.hasChild {
   cursor: pointer;
+}
+.noChild {
+  padding-left: 35px;
 }

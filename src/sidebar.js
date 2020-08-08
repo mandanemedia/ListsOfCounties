@@ -2,6 +2,7 @@
 import React, {useState} from 'react'
 import {Collapse} from 'react-collapse';
 import { IoIosRemove, IoIosAdd } from "react-icons/io";
+import { AiFillDelete } from "react-icons/ai";
 
 type itemType = {
     name: string,
@@ -15,13 +16,16 @@ const Collapsible = ({id, name, depth, props}) => {
     const [isOpen, setIsOpen] = useState(true);
 
     const toggle = () => setIsOpen(!isOpen);
-    const hasChild = props.states || props.cities;
+    const hasChild = (props.states && props.states.length>0) || ( props.cities && props.cities.length>0);
     return (<div className="menuListItem" >
-                <button key={id} onClick={toggle}  style={{ paddingLeft: depth}} className={ hasChild ? "hasChild": null } >
-                    {hasChild ? isOpen ? <IoIosRemove /> : <IoIosAdd /> : null}
-                    {name}
-                </button>
-                {props.states || props.cities ?  
+                <div className="rowItem"> 
+                    {hasChild ? <AiFillDelete className="deleteRow"/> : null}
+                    <button key={id}  style={{ marginLeft: depth}} onClick={toggle} className={`treeButton ${hasChild ? " hasChild": " noChild" }`} >
+                        {hasChild ? isOpen ? <IoIosRemove /> : <IoIosAdd /> : null}
+                        {name}
+                    </button>
+                </div>
+                {hasChild ?  
                 <Collapse isOpened={isOpen}>
                     {props.states ? <SidebarItem data={props.states} depth={depth+20} /> : null }
                     {props.cities ? <SidebarItem data={props.cities} depth={depth+20} /> : null }
