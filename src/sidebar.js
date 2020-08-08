@@ -1,6 +1,7 @@
 // @flow
 import React, {useState} from 'react'
 import {Collapse} from 'react-collapse';
+import { IoIosRemove, IoIosAdd } from "react-icons/io";
 
 type itemType = {
     name: string,
@@ -14,8 +15,10 @@ const Collapsible = ({id, name, depth, props}) => {
     const [isOpen, setIsOpen] = useState(true);
 
     const toggle = () => setIsOpen(!isOpen);
+    const hasChild = props.states || props.cities;
     return (<div className="menuListItem" >
-                <button key={id} onClick={toggle}  style={{ paddingLeft: depth }} className={ !isOpen ? "plus" : "minus"} >
+                <button key={id} onClick={toggle}  style={{ paddingLeft: depth}} className={ hasChild ? "hasChild": null } >
+                    {hasChild ? isOpen ? <IoIosRemove /> : <IoIosAdd /> : null}
                     {name}
                 </button>
                 {props.states || props.cities ?  
