@@ -11,47 +11,50 @@ type itemType = {
     cities? : Array<itemType>
 }
 
-const Collapsible = ({id, name, depth, props}) => {
+const Collapsible = ({id, name, depth, onRemoveDataRow, props}) => {
 
     const [isOpen, setIsOpen] = useState(true);
 
     const toggle = () => setIsOpen(!isOpen);
     const hasChild = (props.states && props.states.length>0) || ( props.cities && props.cities.length>0);
+    const removeDataRow = (id) => {
+        onRemoveDataRow(id);
+    };
     return (<div className="menuListItem" >
                 <div className="rowItem"> 
-                    {hasChild ? <AiFillDelete className="deleteRow"/> : null}
-                    <button key={id}  style={{ marginLeft: depth}} onClick={toggle} className={`treeButton ${hasChild ? " hasChild": " noChild" }`} >
+                    {props.states ? <AiFillDelete onClick={()=>removeDataRow(id)} className="removeRow" /> : null }
+                    <button style={{ marginLeft: depth}} onClick={toggle} className={`treeButton ${hasChild ? " hasChild": " noChild" }`} >
                         {hasChild ? isOpen ? <IoIosRemove /> : <IoIosAdd /> : null}
                         {name}
                     </button>
                 </div>
                 {hasChild ?  
                 <Collapse isOpened={isOpen}>
-                    {props.states ? <SidebarItem data={props.states} depth={depth+20} /> : null }
-                    {props.cities ? <SidebarItem data={props.cities} depth={depth+20} /> : null }
+                    {props.states ? <SidebarItem data={props.states} depth={depth+20} onRemoveDataRow={onRemoveDataRow}/> : null }
+                    {props.cities ? <SidebarItem data={props.cities} depth={depth+20} onRemoveDataRow={onRemoveDataRow} /> : null }
                 </Collapse> 
                 :null}
             </div>);
 }
 
-const SidebarItem = ({data, depth=0}:{data:Array<itemType>, depth:number}) => 
+const SidebarItem = ({data, depth=0, onRemoveDataRow=null}:{data:Array<itemType>, depth:number, onRemoveDataRow:any}) => 
 {
     return (
         <div className="menuList">
             {
                 data.map( ({name, id, ...props}) => {
-                    return (<Collapsible id={id} name={name} depth={depth} props={props}/>)
+                    return (<Collapsible key={id} id={id} name={name} depth={depth} onRemoveDataRow={onRemoveDataRow} props={props}/>)
                 })
             }
         </div>
     )
 }
 
-const Sidebar = ({items}:{items:Array<itemType>}) => 
+const Sidebar = ({items, onRemoveDataRow}:{items:Array<itemType>, onRemoveDataRow:any}) => 
  {
   return (
     <div  className="sidebar">
-        <SidebarItem data={items} depth={0} />
+        <SidebarItem data={items} depth={0} onRemoveDataRow={onRemoveDataRow} />
     </div>
   )
 }

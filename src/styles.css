@@ -5,7 +5,7 @@
 .rowItem {
   border: #EEE 1px solid;
 }
-.deleteRow {
+.removeRow {
   padding-left: 2px;
   padding-right: 2px;
   cursor: pointer;
@@ -18,5 +18,5 @@
   cursor: pointer;
 }
 .noChild {
-  padding-left: 35px;
+  padding-left: 19px;
 }
