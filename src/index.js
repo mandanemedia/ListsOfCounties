@@ -20,7 +20,7 @@ const App = () => {
   }, []);
 
   const handleRemoveDataRow = (parents:Array<number>) => {
-    // delete country
+    // remove the country with id === parents[0]
     if (parents.length === 1) {
       let newData = [...data];
       newData = newData.filter(
@@ -28,7 +28,7 @@ const App = () => {
       );
       setData(newData);
     }
-    // delete state
+    // remove the state with id === parents[1]
     else if (parents.length === 2) {
       const newData = [...data];
       const countryIndex = newData.findIndex((row) => row.id === parents[0]);
@@ -37,7 +37,7 @@ const App = () => {
       );
       setData(newData);
     } else if (parents.length === 3) {
-    // delete city
+    // remove the city with id === parents[2]
       const newData = [...data];
       const countryIndex = newData.findIndex((row) => row.id === parents[0]);
       const stateIndex = newData[countryIndex].states.findIndex((row) => row.id === parents[1]);
