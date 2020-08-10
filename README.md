@@ -4,7 +4,7 @@ Create an app that does the following:
 - Recursively render children (states, cities) as a tree structure
 - Collapsable / expandable - start collapsed
 - Some basic styling with a framework or from scratch
-- If you have time, deleting individual tree items or branches
+- Deleting individual tree items or branches
 
 Data URL: https://raw.githubusercontent.com/mandanemedia/ListsOfCounties/master/src/countries%2Bstates%2Bcities.json
 e.g.:
