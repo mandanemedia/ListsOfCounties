@@ -4,11 +4,11 @@ import { Collapse } from 'react-collapse';
 import { IoIosRemove, IoIosAdd } from 'react-icons/io';
 import { AiFillDelete } from 'react-icons/ai';
 
-type itemType = {
+export type ItemType = {
     name: string,
     id: number,
-    states? : Array<itemType>,
-    cities? : Array<itemType>
+    states? : Array<ItemType>,
+    cities? : Array<ItemType>
 };
 
 const Collapsible = (
@@ -63,7 +63,7 @@ const Collapsible = (
 
 const SidebarItem = ({
   data, depth = 0, onRemoveDataRow = null, parrents = [],
-}:{data:Array<itemType>, depth:number, onRemoveDataRow:any, parrents: Array<any>}) => (
+}:{data:Array<ItemType>, depth:number, onRemoveDataRow:any, parrents: Array<any>}) => (
   <div className="menuList">
     {
                 data.map(({ name, id, ...props }) => {
@@ -83,7 +83,7 @@ const SidebarItem = ({
   </div>
 );
 
-const Sidebar = ({ items, onRemoveDataRow }:{items:Array<itemType>, onRemoveDataRow:any}) => (
+const Sidebar = ({ items, onRemoveDataRow }:{items:Array<ItemType>, onRemoveDataRow:any}) => (
   <div className="sidebar">
     <SidebarItem data={items} depth={0} onRemoveDataRow={onRemoveDataRow} parrents={[]} />
   </div>

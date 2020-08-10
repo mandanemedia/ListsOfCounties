@@ -1,12 +1,14 @@
+// @flow
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import './styles.css';
 import jsonData from './data.json';
 import Sidebar from './sidebar';
+import type { ItemType } from './sidebar';
 
 const DataURL = 'https://raw.githubusercontent.com/mandanemedia/ListsOfCounties/master/src/countries%2Bstates%2Bcities.json';
 
-const App = ({ items = [] }) => {
+const App = ({ items = [] }: {items:Array<ItemType>}) => {
   const [data, setData] = useState(items);
 
   useEffect(() => {
@@ -17,7 +19,7 @@ const App = ({ items = [] }) => {
       });
   }, []);
 
-  const handleRemoveDataRow = (parents) => {
+  const handleRemoveDataRow = (parents:Array<number>) => {
     // delete country
     if (parents.length === 1) {
       let newData = [...data];
@@ -37,8 +39,10 @@ const App = ({ items = [] }) => {
       const newData = [...data];
       const countryIndex = newData.findIndex((row) => row.id === parents[0]);
       const stateIndex = newData[countryIndex].states.findIndex((row) => row.id === parents[1]);
-      newData[countryIndex].states[stateIndex].cities = newData[countryIndex]
-        .states[stateIndex].cities.filter((item) => [parents[2]].indexOf(item.id) === -1);
+      newData[countryIndex].states[stateIndex].cities = newData[countryIndex].states[stateIndex]
+        .cities.filter(
+          (item) => [parents[2]].indexOf(item.id) === -1,
+        );
       setData(newData);
     }
   };
