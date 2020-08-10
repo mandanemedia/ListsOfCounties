@@ -1,4 +1,3 @@
-// @flow
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import "./styles.css";
@@ -20,8 +19,30 @@ const App = ({items=[]}) => {
       });
   },[]);
 
-  const handleRemoveDataRow = (id) => {
-    setData(data.filter((item) =>  [id].indexOf( item.id ) === -1 ));
+  const handleRemoveDataRow = (parents) => {
+    //delete country 
+    if(parents.length === 1) {
+      let newData = [...data];
+      newData = newData.filter((item) =>  [parents[0]].indexOf( item.id ) === -1 )
+      setData(newData);
+    }
+    //delete state
+    else if(parents.length === 2){
+      let newData = [...data];
+      let countryIndex = newData.findIndex( row => row.id === parents[0]);
+      let newStates = newData[countryIndex].states.filter((item) =>  [parents[1]].indexOf( item.id ) === -1 );
+      newData[countryIndex].states = [...newStates];
+      setData(newData);
+    }
+    //delete city
+    else if(parents.length === 3){
+      let newData = [...data];
+      let countryIndex = newData.findIndex( row => row.id === parents[0] );
+      let stateIndex = newData[countryIndex].states.findIndex( row => row.id === parents[1]);
+      let newCity = newData[countryIndex].states[stateIndex].cities.filter((item) =>  [parents[2]].indexOf( item.id ) === -1 );
+      newData[countryIndex].states[stateIndex].cities = [...newCity];
+      setData(newData);
+    }
   }
 
   return (<>
