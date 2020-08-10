@@ -23,7 +23,9 @@ const App = () => {
     // delete country
     if (parents.length === 1) {
       let newData = [...data];
-      newData = newData.filter(item => [parents[0]].indexOf(item.id) === -1);
+      newData = newData.filter(
+        item => [parents[0]].indexOf(item.id) === -1,
+      );
       setData(newData);
     }
     // delete state
