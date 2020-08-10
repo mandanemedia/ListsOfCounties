@@ -2,20 +2,20 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import './styles.css';
-import jsonData from './data.json';
 import Sidebar from './sidebar';
-import type { ItemType } from './sidebar';
 
 const DataURL = 'https://raw.githubusercontent.com/mandanemedia/ListsOfCounties/master/src/countries%2Bstates%2Bcities.json';
 
-const App = ({ items = [] }: {items:Array<ItemType>}) => {
-  const [data, setData] = useState(items);
+const App = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(DataURL)
       .then((res) => res.json())
       .then((newData) => {
         setData(newData);
+        setLoading(false);
       });
   }, []);
 
@@ -49,7 +49,7 @@ const App = ({ items = [] }: {items:Array<ItemType>}) => {
 
   return (
     <>
-      {(data.length > 0)
+      {!loading
         ? <Sidebar items={data} onRemoveDataRow={handleRemoveDataRow} />
         : <span>Loading</span>}
     </>
@@ -57,6 +57,6 @@ const App = ({ items = [] }: {items:Array<ItemType>}) => {
 };
 
 ReactDOM.render(
-  <App items={jsonData} />,
+  <App />,
   document.getElementById('root'),
 );
