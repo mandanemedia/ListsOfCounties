@@ -30,8 +30,7 @@ const App = ({items=[]}) => {
     else if(parents.length === 2){
       let newData = [...data];
       let countryIndex = newData.findIndex( row => row.id === parents[0]);
-      let newStates = newData[countryIndex].states.filter((item) =>  [parents[1]].indexOf( item.id ) === -1 );
-      newData[countryIndex].states = [...newStates];
+      newData[countryIndex].states = newData[countryIndex].states.filter((item) =>  [parents[1]].indexOf( item.id ) === -1 );
       setData(newData);
     }
     //delete city
@@ -39,8 +38,7 @@ const App = ({items=[]}) => {
       let newData = [...data];
       let countryIndex = newData.findIndex( row => row.id === parents[0] );
       let stateIndex = newData[countryIndex].states.findIndex( row => row.id === parents[1]);
-      let newCity = newData[countryIndex].states[stateIndex].cities.filter((item) =>  [parents[2]].indexOf( item.id ) === -1 );
-      newData[countryIndex].states[stateIndex].cities = [...newCity];
+      newData[countryIndex].states[stateIndex].cities = newData[countryIndex].states[stateIndex].cities.filter((item) =>  [parents[2]].indexOf( item.id ) === -1 );
       setData(newData);
     }
   }
