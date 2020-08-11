@@ -12,13 +12,11 @@ export type ItemType = {
     cities? : Array<ItemType>
 };
 
-const Collapsible = (
-  {
-    id, name, depth, onRemoveDataRow, props,
-  },
-) => {
+const Collapsible = ({ props }) => {
   const [isOpen, setIsOpen] = useState(true);
-
+  const {
+    id, name, depth, wikiLink, onRemoveDataRow,
+  } = props;
   const toggle = () => setIsOpen(!isOpen);
   const hasChild = (props.states && props.states.length > 0)
   || (props.cities && props.cities.length > 0);
@@ -34,7 +32,7 @@ const Collapsible = (
           {hasChild ? isOpen ? <IoIosRemove /> : <IoIosAdd /> : null}
           {name}
         </button>
-        {props.wikiLink ? <FcWikipedia className="wikiICon" /> : null}
+        {wikiLink ? <FcWikipedia className="wikiICon" /> : null}
       </div>
       {hasChild ? (
         <Collapse isOpened={isOpen}>
@@ -43,9 +41,9 @@ const Collapsible = (
               <SidebarItem
                 data={props.states}
                 depth={depth + 20}
-                onRemoveDataRow={onRemoveDataRow}
                 parrents={parrents}
-                wikiLink={props.wikiLink}
+                onRemoveDataRow={onRemoveDataRow}
+                wikiLink={wikiLink}
               />
             ) : null }
           {props.cities
@@ -55,7 +53,7 @@ const Collapsible = (
                 depth={depth + 20}
                 onRemoveDataRow={onRemoveDataRow}
                 parrents={parrents}
-                wikiLink={props.wikiLink}
+                wikiLink={wikiLink}
               />
             ) : null }
         </Collapse>
@@ -76,16 +74,17 @@ const SidebarItem = ({
     <div className="menuList">
       {
                 data.map(({ name, id, ...props }) => {
-                  const newprops = { ...props, ...{ parrents }, ...{ wikiLink } };
+                  const newprops = {
+                    ...props,
+                    ...{ id },
+                    ...{ name },
+                    ...{ parrents },
+                    ...{ depth },
+                    ...{ onRemoveDataRow },
+                    ...{ wikiLink },
+                  };
                   return (
-                    <Collapsible
-                      key={id}
-                      id={id}
-                      name={name}
-                      depth={depth}
-                      onRemoveDataRow={onRemoveDataRow}
-                      props={newprops}
-                    />
+                    <Collapsible key={id} props={newprops} />
                   );
                 })
             }
