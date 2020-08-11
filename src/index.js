@@ -9,6 +9,7 @@ const DataURL = 'https://raw.githubusercontent.com/mandanemedia/ListsOfCounties/
 const App = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [wikiLink, setWikiLink] = useState(false);
 
   useEffect(() => {
     fetch(DataURL)
@@ -49,11 +50,15 @@ const App = () => {
     }
   };
 
+  const toggleWikiLink = () => setWikiLink(!wikiLink);
   return (
     <>
+      <input type="checkbox" onChange={toggleWikiLink} defaultChecked={wikiLink} className="toggleWiki" />
+      Display Wikipedia Icon
+      <br />
       {!loading
-        ? <Sidebar items={data} onRemoveDataRow={handleRemoveDataRow} />
-        : <span>Loading</span>}
+        ? <Sidebar items={data} onRemoveDataRow={handleRemoveDataRow} wikiLink={wikiLink} />
+        : <span>Loading List</span>}
     </>
   );
 };

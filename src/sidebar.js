@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Collapse } from 'react-collapse';
 import { IoIosRemove, IoIosAdd } from 'react-icons/io';
 import { AiFillDelete } from 'react-icons/ai';
+import { FcWikipedia } from 'react-icons/fc';
 
 export type ItemType = {
     name: string,
@@ -33,6 +34,7 @@ const Collapsible = (
           {hasChild ? isOpen ? <IoIosRemove /> : <IoIosAdd /> : null}
           {name}
         </button>
+        {props.wikiLink ? <FcWikipedia className="wikiICon" /> : null}
       </div>
       {hasChild ? (
         <Collapse isOpened={isOpen}>
@@ -43,6 +45,7 @@ const Collapsible = (
                 depth={depth + 20}
                 onRemoveDataRow={onRemoveDataRow}
                 parrents={parrents}
+                wikiLink={props.wikiLink}
               />
             ) : null }
           {props.cities
@@ -52,6 +55,7 @@ const Collapsible = (
                 depth={depth + 20}
                 onRemoveDataRow={onRemoveDataRow}
                 parrents={parrents}
+                wikiLink={props.wikiLink}
               />
             ) : null }
         </Collapse>
@@ -62,12 +66,17 @@ const Collapsible = (
 };
 
 const SidebarItem = ({
-  data, depth = 0, onRemoveDataRow = null, parrents = [],
-}:{data:Array<ItemType>, depth:number, onRemoveDataRow:any, parrents: Array<any>}) => (
-  <div className="menuList">
-    {
+  data, depth = 0, onRemoveDataRow = null, parrents = [], wikiLink = false,
+}:{
+  data:Array<ItemType>,
+  depth:number,
+  onRemoveDataRow:Function,
+  parrents: Array<any>,
+  wikiLink:bool}) => (
+    <div className="menuList">
+      {
                 data.map(({ name, id, ...props }) => {
-                  const newprops = { ...props, ...{ parrents } };
+                  const newprops = { ...props, ...{ parrents }, ...{ wikiLink } };
                   return (
                     <Collapsible
                       key={id}
@@ -80,12 +89,21 @@ const SidebarItem = ({
                   );
                 })
             }
-  </div>
+    </div>
 );
 
-const Sidebar = ({ items, onRemoveDataRow }:{items:Array<ItemType>, onRemoveDataRow:any}) => (
+const Sidebar = (
+  { items, onRemoveDataRow, wikiLink }:
+    {items:Array<ItemType>, onRemoveDataRow:Function, wikiLink:bool},
+) => (
   <div className="sidebar">
-    <SidebarItem data={items} depth={0} onRemoveDataRow={onRemoveDataRow} parrents={[]} />
+    <SidebarItem
+      data={items}
+      depth={0}
+      onRemoveDataRow={onRemoveDataRow}
+      parrents={[]}
+      wikiLink={wikiLink}
+    />
   </div>
 );
 
