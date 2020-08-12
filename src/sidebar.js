@@ -15,7 +15,7 @@ export type ItemType = {
 const Collapsible = ({ props }) => {
   const [isOpen, setIsOpen] = useState(true);
   const {
-    id, name, depth, wikiLink, onRemoveDataRow,
+    id, name, depth, wikiLink, onRemoveDataRow, hide,
   } = props;
   const toggle = () => setIsOpen(!isOpen);
   const hasChild = (props.states && props.states.length > 0)
@@ -25,11 +25,11 @@ const Collapsible = ({ props }) => {
     onRemoveDataRow(newParrents);
   };
   return (
-    <div className="menuListItem">
+    <div className={`menuListItem ${(hide > (depth / 20)) ? '' : 'hideDiv'}`}>
       <div className="rowItem">
         <AiFillDelete onClick={() => removeDataRow(parrents)} className="removeRow" />
         <button type="button" style={{ marginLeft: depth }} onClick={toggle} className={`treeButton ${hasChild ? ' hasChild' : ' noChild'}`}>
-          {hasChild ? isOpen ? <IoIosRemove /> : <IoIosAdd /> : null}
+          {hasChild && (hide - 1 > (depth / 20)) ? isOpen ? <IoIosRemove /> : <IoIosAdd /> : null}
           {name}
         </button>
         {wikiLink ? <FcWikipedia className="wikiICon" /> : null}
@@ -44,6 +44,7 @@ const Collapsible = ({ props }) => {
                 parrents={parrents}
                 onRemoveDataRow={onRemoveDataRow}
                 wikiLink={wikiLink}
+                hide={hide}
               />
             ) : null }
           {props.cities
@@ -54,6 +55,7 @@ const Collapsible = ({ props }) => {
                 onRemoveDataRow={onRemoveDataRow}
                 parrents={parrents}
                 wikiLink={wikiLink}
+                hide={hide}
               />
             ) : null }
         </Collapse>
@@ -64,13 +66,14 @@ const Collapsible = ({ props }) => {
 };
 
 const SidebarItem = ({
-  data, depth = 0, onRemoveDataRow = null, parrents = [], wikiLink = false,
+  data, depth = 0, onRemoveDataRow = null, parrents = [], wikiLink = false, hide = 4,
 }:{
   data:Array<ItemType>,
   depth:number,
   onRemoveDataRow:Function,
   parrents: Array<any>,
-  wikiLink:bool}) => (
+  wikiLink:bool,
+  hide: number}) => (
     <div className="menuList">
       {
                 data.map(({ name, id, ...props }) => {
@@ -82,6 +85,7 @@ const SidebarItem = ({
                     ...{ depth },
                     ...{ onRemoveDataRow },
                     ...{ wikiLink },
+                    ...{ hide },
                   };
                   return (
                     <Collapsible key={id} props={newprops} />
@@ -92,8 +96,10 @@ const SidebarItem = ({
 );
 
 const Sidebar = (
-  { items, onRemoveDataRow, wikiLink }:
-    {items:Array<ItemType>, onRemoveDataRow:Function, wikiLink:bool},
+  {
+    items, onRemoveDataRow, wikiLink, hide,
+  }:
+    {items:Array<ItemType>, onRemoveDataRow:Function, wikiLink:bool, hide:number},
 ) => (
   <div className="sidebar">
     <SidebarItem
@@ -102,6 +108,7 @@ const Sidebar = (
       onRemoveDataRow={onRemoveDataRow}
       parrents={[]}
       wikiLink={wikiLink}
+      hide={hide}
     />
   </div>
 );
