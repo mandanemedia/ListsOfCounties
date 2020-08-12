@@ -5,6 +5,8 @@ Create an app that does the following:
 - Collapsable / expandable - start collapsed
 - Some basic styling with a framework or from scratch
 - Deleting individual tree items or branches
+- Hide cities and states from the tree
+- create a search function for the countries
 
 Data URL: https://raw.githubusercontent.com/mandanemedia/ListsOfCounties/master/src/countries%2Bstates%2Bcities.json
 e.g.:
