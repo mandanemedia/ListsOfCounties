@@ -10,7 +10,6 @@ const DataURL = 'https://raw.githubusercontent.com/mandanemedia/ListsOfCounties/
 const App = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [wikiLink, setWikiLink] = useState(false);
   const [setting, setSetting] = useState({ filter: false, hide: '3' });
 
   useEffect(() => {
@@ -52,7 +51,6 @@ const App = () => {
     }
   };
 
-  const toggleWikiLink = () => setWikiLink(!wikiLink);
   const displayFilter = () => setSetting({ ...setting, filter: !setting.filter });
   const applyFilter = () => {
     setSetting({ ...setting, filter: false });
@@ -61,8 +59,6 @@ const App = () => {
   return (
     <>
       <div className="filteringSection">
-        <input type="checkbox" onChange={toggleWikiLink} defaultChecked={wikiLink} className="toggleWiki" />
-        Display Wikipedia icons
         <MdSettings className="rightAlign" onClick={displayFilter} />
         <div className={`settingToggle ${!setting.filter ? 'hideDiv' : ' '}`}>
           Hide:
@@ -84,7 +80,6 @@ const App = () => {
           <Sidebar
             items={data}
             onRemoveDataRow={handleRemoveDataRow}
-            wikiLink={wikiLink}
             hide={parseInt(setting.hide, 10)}
           />
         )
