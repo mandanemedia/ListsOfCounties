@@ -16,25 +16,30 @@ const SidebarItem = ({
   depth:number,
   onRemoveDataRow:Function,
   parrents: Array<any>,
-  hide: number}) => (
+  hide: number}) => {
+  if (data.length === 0) {
+    data.push({ id: 0, name: 'No Record' });
+  }
+  return (
     <div className="menuList">
       {
-                data.map(({ name, id, ...props }) => {
-                  const newprops = {
-                    ...props,
-                    ...{ id },
-                    ...{ name },
-                    ...{ parrents },
-                    ...{ depth },
-                    ...{ onRemoveDataRow },
-                    ...{ hide },
-                  };
-                  return (
-                    <Collapsible key={id} props={newprops} />
-                  );
-                })
-            }
+                        data.map(({ name, id, ...props }) => {
+                          const newprops = {
+                            ...props,
+                            ...{ id },
+                            ...{ name },
+                            ...{ parrents },
+                            ...{ depth },
+                            ...{ onRemoveDataRow },
+                            ...{ hide },
+                          };
+                          return (
+                            <Collapsible key={id} props={newprops} />
+                          );
+                        })
+                    }
     </div>
-);
+  );
+};
 
 export default SidebarItem;

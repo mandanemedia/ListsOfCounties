@@ -27,7 +27,7 @@ const Collapsible = ({ props }) => {
   return (
     <div className={`menuListItem ${(hide > (depth / 20)) ? '' : 'hideDiv'}`}>
       <div className="rowItem">
-        <AiFillDelete onClick={() => removeDataRow(parrents)} className="removeRow" />
+        {id !== 0 ? <AiFillDelete onClick={() => removeDataRow(parrents)} className="removeRow" /> : null}
         <button type="button" style={{ marginLeft: depth }} onClick={toggle} className={`treeButton ${hasChild ? ' hasChild' : ' noChild'}`}>
           {hasChild && (hide - 1 > (depth / 20)) ? isOpen ? <IoIosRemove /> : <IoIosAdd /> : null}
           {name}

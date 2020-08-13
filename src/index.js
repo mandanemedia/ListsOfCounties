@@ -10,15 +10,17 @@ const DataURL = 'https://raw.githubusercontent.com/mandanemedia/ListsOfCounties/
 const App = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [setting, setSetting] = useState({ filter: false, hide: '3' });
+  const [setting, setSetting] = useState({ filter: false, hide: '3', loadedData: [] });
 
   useEffect(() => {
     fetch(DataURL)
       .then((res) => res.json())
       .then((newData) => {
         setData(newData);
+        setSetting({ ...setting, loadedData: newData });
         setLoading(false);
       });
+    // eslint-disable-next-line
   }, []);
 
   const handleRemoveDataRow = (parents:Array<number>) => {
@@ -56,9 +58,18 @@ const App = () => {
     setSetting({ ...setting, filter: false });
   };
   const onChangeFilterValue = (e) => setSetting({ ...setting, hide: e.target.value });
+  const onChangeSearch = (e) => {
+    if (!loading) {
+      const newData = setting.loadedData.filter(
+        (x) => x.name.toLowerCase().includes(e.target.value.toLowerCase())
+      );
+      setData(newData);
+    }
+  };
   return (
     <>
       <div className="filteringSection">
+        <input type="text" name="search" className="searchBox" placeholder="Country Search" onChange={onChangeSearch} />
         <MdSettings className="rightAlign" onClick={displayFilter} />
         <div className={`settingToggle ${!setting.filter ? 'hideDiv' : ' '}`}>
           Hide:

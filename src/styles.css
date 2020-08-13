@@ -28,6 +28,7 @@
 }
 .rightAlign {
   right: 0px;
+  top: 8px;
   cursor: pointer;
   position: absolute;
 }
@@ -52,4 +53,10 @@
 }
 input[type="radio"] {
   cursor: pointer;
+}
+.searchBox{
+  border: #ccc 1px solid;
+  width: 260px;
+  padding: 3px;
+  margin: 5px 0px;
 }
