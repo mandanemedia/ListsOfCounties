@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Collapse } from 'react-collapse';
 import { IoIosRemove, IoIosAdd } from 'react-icons/io';
 import { AiFillDelete } from 'react-icons/ai';
-import SidebarItem from './sidebarItem';
+import SidebarItem from './SidebarItem';
 
 export type ItemType = {
     name: string,

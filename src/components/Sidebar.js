@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
-import SidebarItem from './sidebarItem';
-import type {ItemType} from './sidebarItem';
+import SidebarItem from './SidebarItem';
+import type { ItemType } from './SidebarItem';
 
 const Sidebar = (
   {

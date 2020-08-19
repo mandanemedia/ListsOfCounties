@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import Collapsible from './collapsible';
+import Collapsible from './Collapsible';
 
 export type ItemType = {
     name: string,
