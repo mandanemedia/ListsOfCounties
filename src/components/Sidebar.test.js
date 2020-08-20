@@ -1,6 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import Sidebar from './Sidebar';
+import data from '../data.json';
 
 describe('<Sidebar/> Rendering', () => {
   test('Render an empty sidebar', () => {
@@ -32,5 +33,24 @@ describe('<Sidebar/> Rendering', () => {
 
     const label = button.children[0];
     expect(label).toEqual('No Record');
+  });
+  test('Render sidebar with two root nodes', () => {
+    const component = renderer.create(<Sidebar
+      items={data}
+      onRemoveDataRow={null}
+      hide={3}
+    />);
+    const sidebar = component.toJSON();
+
+    expect(sidebar.props.className).toEqual('sidebar');
+    expect(sidebar.children).toHaveLength(1);
+
+    const sidebarItem = sidebar.children[0];
+    expect(sidebarItem.props.className).toEqual('sidebarItem');
+    expect(sidebarItem.children).toHaveLength(2);
+
+    const collapsible = sidebarItem.children[0];
+    expect(collapsible.props.className.trim()).toEqual('collapsible');
+    expect(collapsible.children).toHaveLength(2);
   });
 });
