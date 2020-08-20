@@ -21,7 +21,7 @@ const SidebarItem = ({
     data.push({ id: 0, name: 'No Record' });
   }
   return (
-    <div className="menuList">
+    <div className="sidebarItem">
       {
                         data.map(({ name, id, ...props }) => {
                           const newprops = {
