@@ -22,6 +22,7 @@ const App = () => {
       }
     };
     getData();
+    // eslint-disable-next-line
   }, []);
 
   const handleRemoveDataRow = (parents:Array<number>) => {
