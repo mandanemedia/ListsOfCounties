@@ -9,14 +9,18 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [setting, setSetting] = useState({ filter: false, hide: '3', loadedData: [] });
 
-  const getData = async () => {
-    const newData = await fetchData();
-    setData(newData);
-    setSetting({ ...setting, loadedData: newData });
-    setLoading(false);
-  };
-
   useEffect(() => {
+    const getData = async () => {
+      try {
+        const newData = await fetchData();
+        setData(newData);
+        setSetting({ ...setting, loadedData: newData });
+        setLoading(false);
+      }
+      catch (e) {
+        setLoading(false);
+      }
+    };
     getData();
   }, []);
 
