@@ -10,15 +10,16 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [setting, setSetting] = useState({ filter: false, hide: '3', loadedData: [] });
 
+  const fetchData = async () => {
+    const response = await fetch(DataURL);
+    const newData = await response.json();
+    setData(newData);
+    setSetting({ ...setting, loadedData: newData });
+    setLoading(false);
+  };
+
   useEffect(() => {
-    fetch(DataURL)
-      .then((res) => res.json())
-      .then((newData) => {
-        setData(newData);
-        setSetting({ ...setting, loadedData: newData });
-        setLoading(false);
-      });
-    // eslint-disable-next-line
+    fetchData();
   }, []);
 
   const handleRemoveDataRow = (parents:Array<number>) => {
