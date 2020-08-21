@@ -1,7 +1,7 @@
 // @flow
 import React, { useEffect, useState } from 'react';
 import { MdSettings } from 'react-icons/md';
-import Sidebar from './Sidebar';
+import Sidebar from '../Components/Sidebar';
 import fetchData from '../fetchData';
 
 const App = () => {
