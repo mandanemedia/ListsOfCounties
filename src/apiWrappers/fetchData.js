@@ -1,4 +1,4 @@
-const DataURL = 'https://raw.githubusercontent.com/mandanemedia/ListsOfCounties/master/src/countries%2Bstates%2Bcities.json';
+export const DataURL = 'https://raw.githubusercontent.com/mandanemedia/ListsOfCounties/master/src/data/countries%2Bstates%2Bcities.json';
 
 const fetchData = async () => {
   try {

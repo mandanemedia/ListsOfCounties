@@ -1,8 +1,8 @@
 // @flow
 import React, { useEffect, useState } from 'react';
 import { MdSettings } from 'react-icons/md';
-import Sidebar from '../Components/Sidebar';
-import fetchData from '../APIWrappers/fetchData';
+import Sidebar from '../components/Sidebar';
+import fetchData from '../apiWrappers/fetchData';
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -22,7 +22,6 @@ const App = () => {
       }
     };
     getData();
-    // react-hooks/exhaustive-deps
   }, []);
 
   const handleRemoveDataRow = (parents:Array<number>) => {

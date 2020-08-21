@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import Sidebar from './Sidebar';
-import data from '../data.json';
+import data from '../data/data.json';
 
 describe('<Sidebar/> Rendering', () => {
   test('Render an empty sidebar', () => {
