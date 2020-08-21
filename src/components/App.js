@@ -2,24 +2,22 @@
 import React, { useEffect, useState } from 'react';
 import { MdSettings } from 'react-icons/md';
 import Sidebar from './Sidebar';
-
-const DataURL = 'https://raw.githubusercontent.com/mandanemedia/ListsOfCounties/master/src/countries%2Bstates%2Bcities.json';
+import fetchData from '../fetchData';
 
 const App = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [setting, setSetting] = useState({ filter: false, hide: '3', loadedData: [] });
 
-  const fetchData = async () => {
-    const response = await fetch(DataURL);
-    const newData = await response.json();
+  const getData = async () => {
+    const newData = await fetchData();
     setData(newData);
     setSetting({ ...setting, loadedData: newData });
     setLoading(false);
   };
 
   useEffect(() => {
-    fetchData();
+    getData();
   }, []);
 
   const handleRemoveDataRow = (parents:Array<number>) => {
