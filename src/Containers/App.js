@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { MdSettings } from 'react-icons/md';
 import Sidebar from '../Components/Sidebar';
-import fetchData from '../fetchData';
+import fetchData from '../APIWrappers/fetchData';
 
 const App = () => {
   const [data, setData] = useState([]);
