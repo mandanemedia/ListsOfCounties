@@ -22,6 +22,7 @@ const App = () => {
       }
     };
     getData();
+    // react-hooks/exhaustive-deps
   }, []);
 
   const handleRemoveDataRow = (parents:Array<number>) => {
