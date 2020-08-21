@@ -1,13 +1,13 @@
 // @flow
 import React, { useEffect, useState } from 'react';
-import { MdSettings } from 'react-icons/md';
+import FilterSection from '../components/FilterSection';
 import Sidebar from '../components/Sidebar';
 import fetchData from '../apiWrappers/fetchData';
 
 const App = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [setting, setSetting] = useState({ filter: false, hide: '3', loadedData: [] });
+  const [setting, setSetting] = useState({ hide: '3', loadedData: [] });
 
   useEffect(() => {
     const getData = async () => {
@@ -55,10 +55,6 @@ const App = () => {
     }
   };
 
-  const displayFilter = () => setSetting({ ...setting, filter: !setting.filter });
-  const applyFilter = () => {
-    setSetting({ ...setting, filter: false });
-  };
   const onChangeFilterValue = (e) => setSetting({ ...setting, hide: e.target.value });
   const onChangeSearch = (e) => {
     if (!loading) {
@@ -70,24 +66,11 @@ const App = () => {
   };
   return (
     <>
-      <div className="filteringSection">
-        <input type="text" name="search" className="searchBox" placeholder="Country Search" onChange={onChangeSearch} />
-        <MdSettings className="rightAlign" onClick={displayFilter} />
-        <div className={`settingToggle ${!setting.filter ? 'hideDiv' : ' '}`}>
-          Hide:
-          <br />
-          <input type="radio" name="hide" value="1" checked={(setting.hide === '1')} onChange={onChangeFilterValue} />
-          State / Province
-          <br />
-          <input type="radio" name="hide" value="2" checked={(setting.hide === '2')} onChange={onChangeFilterValue} />
-          City
-          <br />
-          <input type="radio" name="hide" value="3" checked={(setting.hide === '3')} onChange={onChangeFilterValue} />
-          None
-          <br />
-          <button type="button" className="applyFilter rightAlign" onClick={applyFilter}> Close </button>
-        </div>
-      </div>
+      <FilterSection
+        onChangeSearch={onChangeSearch}
+        onChangeFilterValue={onChangeFilterValue}
+        filterValue={setting.hide}
+      />
       {!loading
         ? (
           <Sidebar
@@ -100,5 +83,4 @@ const App = () => {
     </>
   );
 };
-
 export default App;
