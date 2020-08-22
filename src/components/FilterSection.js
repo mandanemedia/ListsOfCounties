@@ -1,9 +1,8 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { MdSettings } from 'react-icons/md';
 
-const FilterSection = ({
-  onChangeSearch, onChangeFilterValue, filterValue,
-}) => {
+const FilterSection = (props) => {
+  const { onChangeSearch, onChangeFilterValue, filterValue } = props;
   const [filter, setFilter] = useState(false);
   const displayFilter = () => setFilter(true);
   const hideFilter = () => setFilter(false);
