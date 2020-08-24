@@ -1,10 +1,8 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { mount, configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount } from 'enzyme';
 import FilterSection from './FilterSection';
 
-configure({ adapter: new Adapter() });
 describe('<FilterSection/> Rendering', () => {
   test('Render it by react-test-renderer', () => {
     const component = renderer.create(<FilterSection
@@ -42,7 +40,7 @@ describe('<FilterSection/> Rendering', () => {
     component.find('button').simulate('click');
     expect(component.find('.hideDiv').exists()).toEqual(true);
 
-    // Change the radiobox filter
+    // Change the Country Search
     component.find('input[type="text"]').simulate('change', { target: { value: 'C' } });
     expect(onChangeSearch).toBeCalled();
   });
