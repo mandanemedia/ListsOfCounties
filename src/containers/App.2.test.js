@@ -14,7 +14,7 @@ describe('<App/> Rendering using enzyme', () => {
   beforeEach(() => {
     fetchData.mockClear();
   });
-  test('On loading with Snapshot', async () => {
+  test.skip('On loading with Snapshot', async () => {
     const wrapper = mount(<App />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
@@ -27,13 +27,22 @@ describe('<App/> Rendering using enzyme', () => {
 
   test('After loading', async () => {
     const wrapper = mount(<App />);
-    expect(wrapper.find('span').at(0).text()).toEqual('Loading List');
+    expect(wrapper.text().includes('Loading List')).toBe(true);
+    expect(wrapper.text().includes('1st Country')).toBe(false);
 
     const d = await fetchData();
     expect(d).toHaveLength(data.length);
 
     wrapper.update();
-    expect(wrapper.find('span').exists()).toEqual(false);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    // expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.text().includes('Loading List')).toBe(false);
+    expect(wrapper.text().includes('1st Country')).toBe(true);
+    expect(wrapper.find('button').at(1).text()).toBe('1st Country');
+    expect(wrapper.find('button').at(2).text()).toBe('1st State');
+    expect(wrapper.find('button').at(3).text()).toBe('1st City');
+    expect(wrapper.find('button').at(4).text()).toBe('2nd City');
+    expect(wrapper.find('button').at(5).text()).toBe('2nd State');
+    expect(wrapper.find('button').at(6).text()).toBe('3rd City');
+    expect(wrapper.find('button').at(7).text()).toBe('2nd Country');
   });
 });
