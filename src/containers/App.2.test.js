@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import toJson from 'enzyme-to-json';
 import fetchData from '../apiWrappers/fetchData';
 import data from '../data/data.json';
 import App from './App';
@@ -15,7 +16,7 @@ describe('<App/> Rendering using enzyme', () => {
   });
   test('On loading with Snapshot', async () => {
     const wrapper = mount(<App />);
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(toJson(wrapper)).toMatchSnapshot();
   });
 
   test('On loading', () => {
@@ -33,6 +34,6 @@ describe('<App/> Rendering using enzyme', () => {
 
     wrapper.update();
     expect(wrapper.find('span').exists()).toEqual(false);
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(toJson(wrapper)).toMatchSnapshot();
   });
 });
