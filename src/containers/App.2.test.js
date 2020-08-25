@@ -12,10 +12,10 @@ describe('<App/> Rendering using enzyme', () => {
   beforeEach(() => {
     fetchData.mockClear();
   });
-  test.skip('On loading check Snapshot', async () => {
+  /* test.skip('On loading check Snapshot', async () => {
     const wrapper = mount(<App />);
     expect(toJson(wrapper)).toMatchSnapshot();
-  });
+  }); */
 
   test('On loading', () => {
     const wrapper = mount(<App />);
@@ -23,7 +23,7 @@ describe('<App/> Rendering using enzyme', () => {
     expect(wrapper.find('span').at(0).text()).toEqual('Loading List');
   });
 
-  test('After loading', async () => {
+  test('After loading with good data', async () => {
     const wrapper = mount(<App />);
     expect(wrapper.text().includes('Loading List')).toBe(true);
     expect(wrapper.text().includes('1st Country')).toBe(false);
@@ -32,7 +32,7 @@ describe('<App/> Rendering using enzyme', () => {
     expect(d).toHaveLength(data.length);
 
     wrapper.update();
-    expect(toJson(wrapper)).toMatchSnapshot();
+    // expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.text().includes('Loading List')).toBe(false);
     expect(wrapper.text().includes('1st Country')).toBe(true);
     expect(wrapper.find('button').at(1).text()).toBe('1st Country');
