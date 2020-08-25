@@ -15,7 +15,7 @@ describe('<App/> Rendering using enzyme', () => {
   });
   test('On loading with Snapshot', async () => {
     const wrapper = mount(<App />);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.html()).toMatchSnapshot();
   });
 
   test('On loading', () => {
@@ -32,6 +32,7 @@ describe('<App/> Rendering using enzyme', () => {
       expect(d).toHaveLength(data.length);
       wrapper.update();
       expect(wrapper.find('span').exists()).toEqual(false);
+      expect(wrapper.html()).toMatchSnapshot();
     });
   });
 });
