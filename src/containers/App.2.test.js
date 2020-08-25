@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import waitForExpect from 'wait-for-expect';
 import fetchData from '../apiWrappers/fetchData';
 import data from '../data/data.json';
 import App from './App';
@@ -28,8 +29,9 @@ describe('<App/> Rendering using enzyme', () => {
     expect(wrapper.text().includes('Loading List')).toBe(true);
     expect(wrapper.text().includes('1st Country')).toBe(false);
 
-    const d = await fetchData();
-    expect(d).toHaveLength(data.length);
+    await waitForExpect(() => {
+      expect(fetchData).toHaveBeenCalledTimes(1);
+    });
 
     wrapper.update();
     // expect(toJson(wrapper)).toMatchSnapshot();
@@ -49,7 +51,9 @@ describe('<App/> Rendering using enzyme', () => {
     fetchData.mockImplementationOnce(() => Promise.reject(new Error()));
     const wrapper = mount(<App />);
 
-    await fetchData();
+    await waitForExpect(() => {
+      expect(fetchData).toHaveBeenCalledTimes(1);
+    });
     wrapper.update();
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.text().includes('Loading List')).toBe(false);
