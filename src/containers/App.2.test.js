@@ -28,11 +28,11 @@ describe('<App/> Rendering using enzyme', () => {
     const wrapper = mount(<App />);
     expect(wrapper.find('span').at(0).text()).toEqual('Loading List');
 
-    return fetchData().then(async d => {
-      expect(d).toHaveLength(data.length);
-      wrapper.update();
-      expect(wrapper.find('span').exists()).toEqual(false);
-      expect(wrapper.html()).toMatchSnapshot();
-    });
+    const d = await fetchData();
+    expect(d).toHaveLength(data.length);
+
+    wrapper.update();
+    expect(wrapper.find('span').exists()).toEqual(false);
+    expect(wrapper.html()).toMatchSnapshot();
   });
 });
