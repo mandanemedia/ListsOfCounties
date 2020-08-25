@@ -12,7 +12,7 @@ describe('<App/> Rendering using enzyme', () => {
   beforeEach(() => {
     fetchData.mockClear();
   });
-  test.skip('On loading with Snapshot', async () => {
+  test.skip('On loading check Snapshot', async () => {
     const wrapper = mount(<App />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
