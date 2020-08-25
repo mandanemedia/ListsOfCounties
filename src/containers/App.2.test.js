@@ -35,7 +35,6 @@ describe('<App/> Rendering using enzyme', () => {
     });
 
     wrapper.update();
-    // expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.text().includes('Loading List')).toBe(false);
     expect(wrapper.text().includes('1st Country')).toBe(true);
     expect(wrapper.find('button').at(1).text()).toBe('1st Country');
@@ -56,9 +55,32 @@ describe('<App/> Rendering using enzyme', () => {
       expect(fetchData).toHaveBeenCalledTimes(1);
     });
     wrapper.update();
-    // expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.text().includes('Loading List')).toBe(false);
     expect(wrapper.text().includes('No Record')).toBe(true);
+  });
+
+  test('Once loaded and change filter', async () => { const wrapper = mount(<App />);
+    await waitForExpect(() => {
+      expect(fetchData).toHaveBeenCalledTimes(1);
+      wrapper.update();
+      expect(wrapper.text().includes('1st Country')).toBe(true);
+      expect(wrapper.text().includes('1st State')).toBe(true);
+      expect(wrapper.text().includes('1st City')).toBe(true);
+    });
+
+    wrapper.find('input[type="radio"]').at(0).instance().checked = true;
+    wrapper.find('input[type="radio"]').at(0).simulate('change');
+    wrapper.update();
+    expect(wrapper.find('.hideDiv').at(1).text().includes('1st Country')).toBe(false);
+    expect(wrapper.find('.hideDiv').at(1).text().includes('1st State')).toBe(true);
+    expect(wrapper.find('.hideDiv').at(1).text().includes('1st City')).toBe(true);
+
+    wrapper.find('input[type="radio"]').at(1).instance().checked = true;
+    wrapper.find('input[type="radio"]').at(1).simulate('change');
+    wrapper.update();
+    expect(wrapper.find('.hideDiv').at(1).text().includes('1st Country')).toBe(false);
+    expect(wrapper.find('.hideDiv').at(1).text().includes('1st State')).toBe(false);
+    expect(wrapper.find('.hideDiv').at(1).text().includes('1st City')).toBe(true);
   });
 
   test('Once loaded and test remove nodes', async () => {
@@ -98,6 +120,22 @@ describe('<App/> Rendering using enzyme', () => {
     expect(wrapper.text().includes('2nd State')).toBe(false);
     expect(wrapper.text().includes('3rd City')).toBe(false);
     expect(wrapper.text().includes('2nd Country')).toBe(true);
-    expect(toJson(wrapper)).toMatchSnapshot();
+  });
+
+  test('Once loaded and search country', async () => { const wrapper = mount(<App />);
+    await waitForExpect(() => {
+      expect(fetchData).toHaveBeenCalledTimes(1);
+    });
+    wrapper.update();
+
+    expect(wrapper.text().includes('1st Country')).toBe(true);
+    expect(wrapper.text().includes('2nd Country')).toBe(true);
+
+    wrapper.find('input[type="text"]').simulate('change', { target: { value: '1' } });
+    wrapper.update();
+
+    expect(wrapper.text().includes('1st Country')).toBe(true);
+    expect(wrapper.text().includes('2nd Country')).toBe(false);
+    // expect(toJson(wrapper)).toMatchSnapshot();
   });
 });
