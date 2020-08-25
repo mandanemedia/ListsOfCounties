@@ -1,14 +1,16 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import FilterSection from '../components/FilterSection';
 import fetchData from '../apiWrappers/fetchData';
 import data from '../data/data.json';
 import App from './App';
 
 jest.mock('../apiWrappers/fetchData');
+fetchData.mockReturnValue(Promise.resolve(data));
 
-const getData = Promise.resolve(data);
-fetchData.mockReturnValue(getData);
+jest.mock('../components/FilterSection');
+FilterSection.mockReturnValue(null);
 
 describe('<App/> Rendering using enzyme', () => {
   beforeEach(() => {
@@ -34,15 +36,15 @@ describe('<App/> Rendering using enzyme', () => {
     expect(d).toHaveLength(data.length);
 
     wrapper.update();
-    // expect(toJson(wrapper)).toMatchSnapshot();
+    expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.text().includes('Loading List')).toBe(false);
     expect(wrapper.text().includes('1st Country')).toBe(true);
-    expect(wrapper.find('button').at(1).text()).toBe('1st Country');
-    expect(wrapper.find('button').at(2).text()).toBe('1st State');
-    expect(wrapper.find('button').at(3).text()).toBe('1st City');
-    expect(wrapper.find('button').at(4).text()).toBe('2nd City');
-    expect(wrapper.find('button').at(5).text()).toBe('2nd State');
-    expect(wrapper.find('button').at(6).text()).toBe('3rd City');
-    expect(wrapper.find('button').at(7).text()).toBe('2nd Country');
+    expect(wrapper.find('button').at(0).text()).toBe('1st Country');
+    expect(wrapper.find('button').at(1).text()).toBe('1st State');
+    expect(wrapper.find('button').at(2).text()).toBe('1st City');
+    expect(wrapper.find('button').at(3).text()).toBe('2nd City');
+    expect(wrapper.find('button').at(4).text()).toBe('2nd State');
+    expect(wrapper.find('button').at(5).text()).toBe('3rd City');
+    expect(wrapper.find('button').at(6).text()).toBe('2nd Country');
   });
 });
