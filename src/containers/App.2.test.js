@@ -43,4 +43,16 @@ describe('<App/> Rendering using enzyme', () => {
     expect(wrapper.find('button').at(6).text()).toBe('3rd City');
     expect(wrapper.find('button').at(7).text()).toBe('2nd Country');
   });
+
+  test('After loading with error on fetchData', async () => {
+    fetchData.mockReset();
+    fetchData.mockImplementationOnce(() => Promise.reject(new Error()));
+    const wrapper = mount(<App />);
+
+    await fetchData();
+    wrapper.update();
+    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.text().includes('Loading List')).toBe(false);
+    expect(wrapper.text().includes('No Record')).toBe(true);
+  });
 });
