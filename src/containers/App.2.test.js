@@ -7,11 +7,12 @@ import data from '../data/data.json';
 import App from './App';
 
 jest.mock('../apiWrappers/fetchData');
-fetchData.mockReturnValue(Promise.resolve(data));
 
 describe('<App/> Rendering using enzyme', () => {
   beforeEach(() => {
-    fetchData.mockClear();
+    jest.clearAllMocks();
+    fetchData.mockReset();
+    fetchData.mockReturnValue(Promise.resolve(data));
   });
   /* test.skip('On loading check Snapshot', async () => {
     const wrapper = mount(<App />);
@@ -55,8 +56,48 @@ describe('<App/> Rendering using enzyme', () => {
       expect(fetchData).toHaveBeenCalledTimes(1);
     });
     wrapper.update();
-    expect(toJson(wrapper)).toMatchSnapshot();
+    // expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.text().includes('Loading List')).toBe(false);
     expect(wrapper.text().includes('No Record')).toBe(true);
+  });
+
+  test('Once loaded and test remove nodes', async () => {
+    const wrapper = mount(<App />);
+    await waitForExpect(() => {
+      expect(fetchData).toHaveBeenCalledTimes(1);
+    });
+    wrapper.update();
+    expect(wrapper.text().includes('Loading List')).toBe(false);
+
+    // Remove first City
+    wrapper.find('[data-testid="removeDataRow-3"]').at(0).simulate('click');
+    expect(wrapper.text().includes('1st Country')).toBe(true);
+    expect(wrapper.text().includes('1st State')).toBe(true);
+    expect(wrapper.text().includes('1st City')).toBe(false);
+    expect(wrapper.text().includes('2nd City')).toBe(true);
+    expect(wrapper.text().includes('2nd State')).toBe(true);
+    expect(wrapper.text().includes('3rd City')).toBe(true);
+    expect(wrapper.text().includes('2nd Country')).toBe(true);
+
+    // Remove first State
+    wrapper.find('[data-testid="removeDataRow-2"]').at(0).simulate('click');
+    expect(wrapper.text().includes('1st Country')).toBe(true);
+    expect(wrapper.text().includes('1st State')).toBe(false);
+    expect(wrapper.text().includes('1st City')).toBe(false);
+    expect(wrapper.text().includes('2nd City')).toBe(false);
+    expect(wrapper.text().includes('2nd State')).toBe(true);
+    expect(wrapper.text().includes('3rd City')).toBe(true);
+    expect(wrapper.text().includes('2nd Country')).toBe(true);
+
+    // Remove first country
+    wrapper.find('[data-testid="removeDataRow-1"]').at(0).simulate('click');
+    expect(wrapper.text().includes('1st Country')).toBe(false);
+    expect(wrapper.text().includes('1st State')).toBe(false);
+    expect(wrapper.text().includes('1st City')).toBe(false);
+    expect(wrapper.text().includes('2nd City')).toBe(false);
+    expect(wrapper.text().includes('2nd State')).toBe(false);
+    expect(wrapper.text().includes('3rd City')).toBe(false);
+    expect(wrapper.text().includes('2nd Country')).toBe(true);
+    expect(toJson(wrapper)).toMatchSnapshot();
   });
 });
