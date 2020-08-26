@@ -38,9 +38,17 @@ const App = () => {
     else if (parents.length === 2) {
       const newData = [...data];
       const countryIndex = newData.findIndex((row) => row.id === parents[0]);
-      newData[countryIndex].states = newData[countryIndex].states.filter(
-        (item) => [parents[1]].indexOf(item.id) === -1,
-      );
+      newData[countryIndex] = {
+        // cloning the whole content
+        ...newData[countryIndex],
+        // creating a new states
+        states: newData[countryIndex].states.filter(
+          (item) => [parents[1]].indexOf(item.id) === -1,
+        ),
+      };
+      // newData[countryIndex].states = newData[countryIndex].states.filter(
+      //   (item) => [parents[1]].indexOf(item.id) === -1,
+      // );
       setData(newData);
     } else if (parents.length === 3) {
     // remove the city with id === parents[2]

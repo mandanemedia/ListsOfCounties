@@ -23,6 +23,7 @@ describe('<App/> Rendering using enzyme', () => {
     const wrapper = mount(<App />);
     expect(wrapper.find('span').length).toEqual(1);
     expect(wrapper.find('span').at(0).text()).toEqual('Loading List');
+    console.log(JSON.stringify(data));
   });
 
   test('After loading with good data', async () => {
@@ -33,6 +34,7 @@ describe('<App/> Rendering using enzyme', () => {
     await waitForExpect(() => {
       expect(fetchData).toHaveBeenCalledTimes(1);
     });
+    console.log(JSON.stringify(data));
 
     wrapper.update();
     expect(wrapper.text().includes('Loading List')).toBe(false);
@@ -57,6 +59,7 @@ describe('<App/> Rendering using enzyme', () => {
     wrapper.update();
     expect(wrapper.text().includes('Loading List')).toBe(false);
     expect(wrapper.text().includes('No Record')).toBe(true);
+    console.log(JSON.stringify(data));
   });
 
   test('Once loaded and change filter', async () => { const wrapper = mount(<App />);
@@ -81,6 +84,7 @@ describe('<App/> Rendering using enzyme', () => {
     expect(wrapper.find('.hideDiv').at(1).text().includes('1st Country')).toBe(false);
     expect(wrapper.find('.hideDiv').at(1).text().includes('1st State')).toBe(false);
     expect(wrapper.find('.hideDiv').at(1).text().includes('1st City')).toBe(true);
+    console.log(JSON.stringify(data));
   });
 
   test('Once loaded and test remove nodes', async () => {
@@ -120,6 +124,8 @@ describe('<App/> Rendering using enzyme', () => {
     expect(wrapper.text().includes('2nd State')).toBe(false);
     expect(wrapper.text().includes('3rd City')).toBe(false);
     expect(wrapper.text().includes('2nd Country')).toBe(true);
+    console.log('data ');
+    console.log(JSON.stringify(data));
   });
 
   test('Once loaded and search country', async () => { const wrapper = mount(<App />);
@@ -133,9 +139,57 @@ describe('<App/> Rendering using enzyme', () => {
 
     wrapper.find('input[type="text"]').simulate('change', { target: { value: '1' } });
     wrapper.update();
+    console.log(JSON.stringify(data));
 
     expect(wrapper.text().includes('1st Country')).toBe(true);
     expect(wrapper.text().includes('2nd Country')).toBe(false);
     // expect(toJson(wrapper)).toMatchSnapshot();
+  });
+
+  test('Once loaded and remove the first country', async () => {
+    const wrapper = mount(<App />);
+    await waitForExpect(() => {
+      expect(fetchData).toHaveBeenCalledTimes(1);
+      wrapper.update();
+    });
+    console.log(JSON.stringify(data));
+    wrapper.find('[data-testid="removeDataRow-1"]').at(0).simulate('click');
+
+    expect(wrapper.text().includes('1st Country')).toBe(false);
+    expect(wrapper.text().includes('2nd Country')).toBe(true);
+  });
+
+  test('Once loaded and remove the first state', async () => {
+    const wrapper = mount(<App />);
+    await waitForExpect(() => {
+      expect(fetchData).toHaveBeenCalledTimes(1);
+      wrapper.update();
+    });
+    console.log(JSON.stringify(data));
+
+    wrapper.find('[data-testid="removeDataRow-2"]').at(0).simulate('click');
+
+    expect(wrapper.text().includes('1st Country')).toBe(true);
+    expect(wrapper.text().includes('1st State')).toBe(false);
+    expect(wrapper.text().includes('1st City')).toBe(false);
+    expect(wrapper.text().includes('2nd City')).toBe(false);
+    expect(wrapper.text().includes('2nd State')).toBe(true);
+  });
+
+  test('Once loaded and remove the first City', async () => {
+    const wrapper = mount(<App />);
+    await waitForExpect(() => {
+      expect(fetchData).toHaveBeenCalledTimes(1);
+      wrapper.update();
+    });
+    console.log(JSON.stringify(data));
+
+    expect(wrapper.text().includes('1st State')).toBe(true);
+    wrapper.find('[data-testid="removeDataRow-3"]').at(0).simulate('click');
+
+    expect(wrapper.text().includes('1st Country')).toBe(true);
+    expect(wrapper.text().includes('1st State')).toBe(true);
+    expect(wrapper.text().includes('1st City')).toBe(false);
+    expect(wrapper.text().includes('2nd City')).toBe(true);
   });
 });
