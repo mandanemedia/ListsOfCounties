@@ -33,17 +33,12 @@ describe('<App/> Rendering using enzyme', () => {
   test('After loading with good data', async () => {
     await act(async () => {
       const wrapper = mount(<App />);
-      expect(wrapper.text().includes('Loading List')).toBe(true);
-      expect(wrapper.text().includes('1st Country')).toBe(false);
-
       await waitForExpect(() => {
         expect(fetchData).toHaveBeenCalledTimes(1);
       });
       wrapper.update();
       expect(toJson(wrapper)).toMatchSnapshot();
 
-      expect(wrapper.text().includes('Loading List')).toBe(false);
-      expect(wrapper.text().includes('1st Country')).toBe(true);
       expect(wrapper.find('button').at(1).text()).toBe('1st Country');
       expect(wrapper.find('button').at(2).text()).toBe('1st State');
       expect(wrapper.find('button').at(3).text()).toBe('1st City');
@@ -59,7 +54,6 @@ describe('<App/> Rendering using enzyme', () => {
       fetchData.mockReset();
       fetchData.mockImplementationOnce(() => Promise.reject(new Error()));
       const wrapper = mount(<App />);
-
       await waitForExpect(() => {
         expect(fetchData).toHaveBeenCalledTimes(1);
       });
@@ -75,22 +69,16 @@ describe('<App/> Rendering using enzyme', () => {
       await waitForExpect(() => {
         expect(fetchData).toHaveBeenCalledTimes(1);
         wrapper.update();
-        expect(wrapper.text().includes('1st Country')).toBe(true);
-        expect(wrapper.text().includes('1st State')).toBe(true);
-        expect(wrapper.text().includes('1st City')).toBe(true);
       });
-      wrapper.update();
 
       wrapper.find('input[type="radio"]').at(0).instance().checked = true;
       wrapper.find('input[type="radio"]').at(0).simulate('change');
-      wrapper.update();
       expect(wrapper.find('.hideDiv').at(1).text().includes('1st Country')).toBe(false);
       expect(wrapper.find('.hideDiv').at(1).text().includes('1st State')).toBe(true);
       expect(wrapper.find('.hideDiv').at(1).text().includes('1st City')).toBe(true);
 
       wrapper.find('input[type="radio"]').at(1).instance().checked = true;
       wrapper.find('input[type="radio"]').at(1).simulate('change');
-      wrapper.update();
       expect(wrapper.find('.hideDiv').at(1).text().includes('1st Country')).toBe(false);
       expect(wrapper.find('.hideDiv').at(1).text().includes('1st State')).toBe(false);
       expect(wrapper.find('.hideDiv').at(1).text().includes('1st City')).toBe(true);
@@ -104,7 +92,7 @@ describe('<App/> Rendering using enzyme', () => {
         expect(fetchData).toHaveBeenCalledTimes(1);
       });
       wrapper.update();
-      expect(wrapper.text().includes('Loading List')).toBe(false);
+      expect(wrapper.text().includes('1st City')).toBe(true);
 
       // Remove first City
       wrapper.find('[data-testid="removeDataRow-3"]').at(0).simulate('click');
@@ -149,8 +137,6 @@ describe('<App/> Rendering using enzyme', () => {
       expect(wrapper.text().includes('2nd Country')).toBe(true);
 
       wrapper.find('input[type="text"]').simulate('change', { target: { value: '1' } });
-      wrapper.update();
-
       expect(wrapper.text().includes('1st Country')).toBe(true);
       expect(wrapper.text().includes('2nd Country')).toBe(false);
       // expect(toJson(wrapper)).toMatchSnapshot();
